@@ -1,6 +1,7 @@
-function createDeck() {
+function createDeck() { 
+    
     const suits = ["♥", "♦", "♣", "♠"]
-    let deck = []
+    const deck = []
 
     function createCard (suit, value, special = undefined) {
         let card = {
@@ -22,7 +23,7 @@ function createDeck() {
     createCard (null, 1, "mahjong")
     createCard (null, 0, "dog")
     createCard (null, 15, "dragon")
-    return deck;
+    return deck; 
 };
 
 
@@ -41,6 +42,16 @@ function dealCards(deck, players, quantity = 1 ) {
     for (let i = 0; i < (quantity * players.length); i++) {
         players[i % (players.length)].hand.push(deck.pop());
     }
+}
+
+function findMahjong(players){  //returns array number of player that has mahjong
+    for (i = 0; i < players.length; i++) {
+        if( players[i].hand.find( x => x.special === "phoenix")){
+            return i
+        }
+    }
+
+    return -1
 }
 
 /*********************
@@ -65,6 +76,8 @@ class Player {
 
 
 }
+
+
 function testMain(){
     let gameDeck = [];
     let players = [];
@@ -75,7 +88,10 @@ function testMain(){
     gameDeck = createDeck();
     shuffleDeck(gameDeck);
     dealCards(gameDeck, players, 14);
-    printDeck(players[0].hand);
+    //printDeck(players[0].hand);
+    firstPlayer = findMahjong(players); 
+    console.log("Player with Mahjong:", findMahjong(players))
+    printDeck(players[firstPlayer].hand);
 
 
 }

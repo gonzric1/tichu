@@ -7,6 +7,16 @@ const io = require('socket.io')(http);
 const publicPath = path.join(__dirname, "/../public");
 const port = process.env.PORT || 3000;
 
+const knex = require('knex')({
+  client: 'mysql',
+  connection: {
+    host : '127.0.0.1',
+    user : 'ricky',
+    password : 'rqer4134',
+    database : 'myapp_test'
+  }
+});
+
 app.use(express.static(publicPath));
 
 io.on('connection', function(socket){

@@ -3,7 +3,7 @@ const express = require('express')
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-
+const helper = require('./auth/_helper.js')
 const publicPath = path.join(__dirname, "/../public");
 const port = process.env.PORT || 3000;
 
@@ -15,10 +15,15 @@ app.use(express.json());
 app.use(express.static(publicPath));
 
 app.post('/register', (req, res) => {
+  console.log(req.body)
   let { name, email, password } = req.body
-  let user = createUser(name, email, password);
-  res.send(user)
+  helper(name, email, password, res);
+
 })
+
+
+
+
 
 //app.get('/register', "../public/views/registration")
 io.on('connection', function(socket){
